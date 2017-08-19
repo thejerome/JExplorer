@@ -21,6 +21,7 @@ public class JExplorerStarter {
 
     private static Navigation navigation;
     private static JComponent mainLayout;
+    private static JMenu displayFilterMenu;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
@@ -44,7 +45,7 @@ public class JExplorerStarter {
             final JMenu fileFilterMenu = new JMenu(bundle.getString("fileFilter"));
             menubar.add(fileFilterMenu);
 
-            final JMenu displayFilterMenu = new JMenu(bundle.getString("noFilter"));
+            displayFilterMenu = new JMenu(bundle.getString("noFilter"));
             displayFilterMenu.setEnabled(false);
             menubar.add(displayFilterMenu);
 
@@ -101,7 +102,10 @@ public class JExplorerStarter {
                 mainLayout = newLayout;
                 frame.add(mainLayout);
                 frame.revalidate();
+
+                displayFilterMenu.setText(bundle.getString("noFilter"));
             }
+
         }
     }
 
