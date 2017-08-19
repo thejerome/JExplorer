@@ -2,7 +2,6 @@ package com.efimchick.jexplorer.navigation;
 
 import com.google.common.collect.ImmutableMap;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;

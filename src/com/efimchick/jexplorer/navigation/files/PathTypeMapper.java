@@ -1,12 +1,10 @@
 package com.efimchick.jexplorer.navigation.files;
 
 import com.efimchick.jexplorer.navigation.File;
-import com.google.common.collect.ImmutableMap;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
 import java.util.Objects;
 
 import static com.efimchick.jexplorer.navigation.File.Type.*;

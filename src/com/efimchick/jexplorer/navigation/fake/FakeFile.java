@@ -4,8 +4,6 @@ import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
 import com.google.common.collect.ImmutableMap;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Map;
 
 import static java.util.Collections.emptyMap;

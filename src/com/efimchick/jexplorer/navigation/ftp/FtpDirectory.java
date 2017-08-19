@@ -1,6 +1,5 @@
 package com.efimchick.jexplorer.navigation.ftp;
 
-import com.efimchick.jexplorer.I18n;
 import com.efimchick.jexplorer.navigation.Directory;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.net.ftp.FTPFile;

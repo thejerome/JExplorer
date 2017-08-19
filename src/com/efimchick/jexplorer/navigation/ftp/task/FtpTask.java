@@ -2,7 +2,6 @@ package com.efimchick.jexplorer.navigation.ftp.task;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public abstract class FtpTask<T> {

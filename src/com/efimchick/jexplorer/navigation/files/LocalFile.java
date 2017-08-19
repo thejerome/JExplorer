@@ -1,30 +1,19 @@
 package com.efimchick.jexplorer.navigation.files;
 
 
-import com.efimchick.jexplorer.I18n;
-import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
 import com.google.common.collect.ImmutableMap;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.time.DateTimeException;
-import java.time.Instant;
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 
 import static com.efimchick.jexplorer.I18n.bundle;
-import static com.efimchick.jexplorer.navigation.File.Type.IMAGE;
-import static com.efimchick.jexplorer.navigation.File.Type.OTHER;
-import static com.efimchick.jexplorer.navigation.File.Type.TEXT;
-import static com.efimchick.jexplorer.navigation.ui.Navigation.format;
 import static java.util.Collections.emptyMap;
-import static java.util.stream.Collectors.toMap;
 
 public class LocalFile implements File {
     private final Path path;

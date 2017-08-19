@@ -1,6 +1,5 @@
 package com.efimchick.jexplorer.navigation.ui;
 
-import com.efimchick.jexplorer.I18n;
 import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
 import com.efimchick.jexplorer.navigation.ui.content.FilesList;
@@ -20,7 +19,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

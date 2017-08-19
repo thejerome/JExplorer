@@ -1,10 +1,7 @@
 package com.efimchick.jexplorer.navigation.ui;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-
-import static java.lang.Math.*;
 
 public class ImagePane extends JPanelScrollable {
 

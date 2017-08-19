@@ -2,15 +2,10 @@ package com.efimchick.jexplorer.navigation;
 
 import com.google.common.collect.ImmutableMap;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
-import java.nio.file.Path;
 import java.util.Map;
 
-import static com.efimchick.jexplorer.navigation.File.Type.IMAGE;
-import static com.efimchick.jexplorer.navigation.File.Type.OTHER;
-import static com.efimchick.jexplorer.navigation.File.Type.TEXT;
+import static com.efimchick.jexplorer.navigation.File.Type.*;
 
 public interface File {
 

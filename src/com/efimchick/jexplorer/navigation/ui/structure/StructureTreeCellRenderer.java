@@ -5,9 +5,7 @@ import com.efimchick.jexplorer.navigation.File;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-import javax.swing.tree.DefaultTreeCellEditor;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;

@@ -2,15 +2,12 @@ package com.efimchick.jexplorer.navigation.fake;
 
 import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
-import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toMap;
 
 public class FakeDirectory implements Directory {

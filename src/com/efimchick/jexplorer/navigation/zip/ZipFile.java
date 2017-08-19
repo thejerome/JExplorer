@@ -1,26 +1,19 @@
 package com.efimchick.jexplorer.navigation.zip;
 
 
-import com.efimchick.jexplorer.I18n;
 import com.efimchick.jexplorer.navigation.File;
 import com.google.common.collect.ImmutableMap;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 
 import static com.efimchick.jexplorer.I18n.bundle;
-import static com.efimchick.jexplorer.navigation.File.Type.IMAGE;
-import static com.efimchick.jexplorer.navigation.File.Type.TEXT;
 import static com.efimchick.jexplorer.navigation.File.TypeMapper.getExtension;
 import static com.efimchick.jexplorer.navigation.File.TypeMapper.mapExtension;
-import static com.efimchick.jexplorer.navigation.ui.Navigation.format;
-import static com.efimchick.jexplorer.navigation.zip.ZipDirectory.endingZipPathDivisor;
 import static com.efimchick.jexplorer.navigation.zip.ZipDirectory.zipPathDivisor;
-import static java.util.Collections.emptyMap;
 
 public class ZipFile implements File {
     private final ZipEntry zipEntry;

@@ -1,8 +1,8 @@
 package com.efimchick.jexplorer.navigation.ftp.task;
 
+import com.efimchick.jexplorer.navigation.ftp.FtpConnector;
 import com.efimchick.jexplorer.navigation.ftp.FtpDirectory;
 import com.efimchick.jexplorer.navigation.ftp.FtpFile;
-import com.efimchick.jexplorer.navigation.ftp.FtpConnector;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
