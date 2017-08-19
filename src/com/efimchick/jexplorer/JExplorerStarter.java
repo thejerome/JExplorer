@@ -59,12 +59,12 @@ public class JExplorerStarter {
                 String extension = JOptionPane.showInputDialog(frame, bundle.getString("setExtension"));
                 if (extension != null) {
                     extension = extension.replaceAll("[^a-zA-Z]", "").toLowerCase();
-                }
-                if (extension != null && !extension.isEmpty()) {
-                    navigation.setFileExtensionFilter(new FileExtensionFilter(extension));
-                    displayFilterMenu.setText("." + extension);
-                } else {
-                    JOptionPane.showMessageDialog(frame, bundle.getString("badExtension"), bundle.getString("error"), JOptionPane.ERROR_MESSAGE);
+                    if (!extension.isEmpty()) {
+                        navigation.setFileExtensionFilter(new FileExtensionFilter(extension));
+                        displayFilterMenu.setText("." + extension);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, bundle.getString("badExtension"), bundle.getString("error"), JOptionPane.ERROR_MESSAGE);
+                    }
                 }
 
             });
