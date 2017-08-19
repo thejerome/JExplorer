@@ -10,7 +10,7 @@ import static com.efimchick.jexplorer.I18n.bundle;
 
 public interface Directory extends File {
 
-    List<? extends File> getFiles() throws Exception;
+    List<? extends File> getFiles(FileExtensionFilter filter) throws Exception;
     List<? extends Directory> getSubDirs() throws Exception;
 
     @Override
@@ -23,7 +23,7 @@ public interface Directory extends File {
         try {
             return ImmutableMap.<String, String>builder()
                     .put(bundle.getString("name"), getName())
-                    .put(bundle.getString("filesInside"), String.valueOf(getFiles().size()))
+                    .put(bundle.getString("filesInside"), String.valueOf(getFiles(FileExtensionFilter.empty).size()))
                     .put(bundle.getString("subdirectoriesInside"), String.valueOf(getSubDirs().size()))
                     .build();
         } catch (Exception e) {

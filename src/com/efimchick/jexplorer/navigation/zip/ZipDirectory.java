@@ -2,10 +2,12 @@ package com.efimchick.jexplorer.navigation.zip;
 
 import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
+import com.efimchick.jexplorer.navigation.FileExtensionFilter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.Collections.unmodifiableList;
@@ -39,8 +41,12 @@ public class ZipDirectory implements Directory{
     }
 
     @Override
-    public List<? extends File> getFiles() {
-        return unmodifiableList(files);
+    public List<? extends File> getFiles(FileExtensionFilter filter) {
+        return unmodifiableList(
+                files.stream()
+                        .filter(f -> filter.test(f.getName()))
+                        .collect(Collectors.toList())
+        );
     }
 
     @Override

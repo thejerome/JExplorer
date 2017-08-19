@@ -13,7 +13,7 @@ import static com.efimchick.jexplorer.I18n.bundle;
 
 public class FtpLoginDialog extends JDialog {
 
-    private JComponent createdLayout = null;
+    private Navigation navigation = null;
     private boolean succeeded;
 
     private JTextField serverField;
@@ -97,7 +97,7 @@ public class FtpLoginDialog extends JDialog {
 
                 final FtpConnector ftpConnector = new FtpConnector(getServer(), getPort(), getLogin(), getPassword().getBytes());
                 if (ftpConnector.isConnectable()){
-                    createdLayout = new Navigation(new FtpRoot(ftpConnector)).createMainLayout();
+                    navigation = new Navigation(new FtpRoot(ftpConnector));
                     succeeded = true;
                     dispose();
                 } else {
@@ -149,7 +149,7 @@ public class FtpLoginDialog extends JDialog {
         return succeeded;
     }
 
-    public JComponent getCreatedLayout(){
-        return createdLayout;
+    public Navigation getCreatedNavigation(){
+        return navigation;
     }
 }

@@ -2,6 +2,7 @@ package com.efimchick.jexplorer.navigation.files;
 
 import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
+import com.efimchick.jexplorer.navigation.FileExtensionFilter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -32,12 +33,13 @@ public class LocalDirectory implements Directory {
         }
     }
 
-    public List<LocalFile> scanForFiles() {
+    public List<LocalFile> scanForFiles(FileExtensionFilter filter) {
         try {
             return Files.list(path)
                     .filter(Files::isRegularFile)
                     .filter(f -> !f.getFileName().toString().equals("."))
                     .filter(f -> !f.getFileName().toString().equals(".."))
+                    .filter(f -> filter.test(f.getFileName().toString()))
                     .map(LocalFile::new)
                     .collect(toList());
         } catch (IOException e) {
@@ -83,7 +85,7 @@ public class LocalDirectory implements Directory {
     }
 
     @Override
-    public List<? extends File> getFiles() {
-        return scanForFiles();
+    public List<? extends File> getFiles(FileExtensionFilter filter) {
+        return scanForFiles(filter);
     }
 }

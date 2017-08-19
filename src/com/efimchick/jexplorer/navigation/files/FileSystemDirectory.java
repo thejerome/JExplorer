@@ -2,6 +2,7 @@ package com.efimchick.jexplorer.navigation.files;
 
 import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
+import com.efimchick.jexplorer.navigation.FileExtensionFilter;
 
 import java.nio.file.FileSystems;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class FileSystemDirectory implements Directory {
     }
 
     @Override
-    public List<? extends File> getFiles() {
+    public List<? extends File> getFiles(FileExtensionFilter filter) {
         return emptyList();
     }
 

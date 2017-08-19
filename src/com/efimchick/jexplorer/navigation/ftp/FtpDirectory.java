@@ -1,6 +1,7 @@
 package com.efimchick.jexplorer.navigation.ftp;
 
 import com.efimchick.jexplorer.navigation.Directory;
+import com.efimchick.jexplorer.navigation.FileExtensionFilter;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -22,8 +23,8 @@ public class FtpDirectory implements Directory {
     }
 
     @Override
-    public List<FtpFile> getFiles() throws IOException {
-        return ftpConnector.getFiles(this);
+    public List<FtpFile> getFiles(FileExtensionFilter filter) throws IOException {
+        return ftpConnector.getFiles(this, filter);
     }
 
     @Override

@@ -2,11 +2,13 @@ package com.efimchick.jexplorer.navigation.fake;
 
 import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
+import com.efimchick.jexplorer.navigation.FileExtensionFilter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
 
@@ -48,7 +50,7 @@ public class FakeDirectory implements Directory {
 
     @Override
     public Map<String, String> getProperties() {
-        return getFiles().stream().map(f -> f.getProperties())
+        return getFiles(FileExtensionFilter.empty).stream().map(f -> f.getProperties())
                 .flatMap(p -> p.entrySet().stream())
                 .collect(toMap(
                         e -> e.getKey(),
@@ -58,8 +60,12 @@ public class FakeDirectory implements Directory {
     }
 
     @Override
-    public List<? extends File> getFiles() {
-        return Collections.unmodifiableList(files);
+    public List<? extends File> getFiles(FileExtensionFilter filter) {
+        return Collections.unmodifiableList(
+                files.stream()
+                        .filter(f -> filter.test(f.getName()))
+                        .collect(Collectors.toList())
+        );
     }
 
     @Override

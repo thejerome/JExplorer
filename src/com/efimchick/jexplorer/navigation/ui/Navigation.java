@@ -2,6 +2,7 @@ package com.efimchick.jexplorer.navigation.ui;
 
 import com.efimchick.jexplorer.navigation.Directory;
 import com.efimchick.jexplorer.navigation.File;
+import com.efimchick.jexplorer.navigation.FileExtensionFilter;
 import com.efimchick.jexplorer.navigation.ui.content.FilesList;
 import com.efimchick.jexplorer.navigation.ui.properties.FilePropertiesPane;
 import com.efimchick.jexplorer.navigation.ui.structure.DirectoryTreeNode;
@@ -39,6 +40,8 @@ public class Navigation {
     private SwingWorker<String, String> creatingFileListSwingWorker;
     private SwingWorker<String, String> creatingPropertiesPaneSwingWorker;
     private SwingWorker<String, String> creatingPreviewPaneSwingWorker;
+    private FileExtensionFilter fileExtensionFilter = FileExtensionFilter.empty;
+    private Directory currentDirectory;
 
     {
         structurePanel.add(new JLabel(bundle.getString("structure")), BorderLayout.NORTH);
@@ -52,7 +55,40 @@ public class Navigation {
 
     public Navigation(Directory root) {
         Objects.requireNonNull(root);
+        currentDirectory = root;
         this.root = root;
+    }
+
+    public JPanel createMainLayout() {
+
+        JPanel mainPanel = new JPanel(new GridLayout(1, 1));
+
+        structurePanel.add(createStructurePane(), CENTER);
+        contentPanel.add(createFileListPane(root), CENTER);
+        propertiesPanel.add(createEmptyPropertiesPanel(), CENTER);
+        previewPanel.add(createNoPreviewPane(), CENTER);
+
+
+        JPanel centerPane = new JPanel(new BorderLayout());
+        centerPane.add(contentPanel, CENTER);
+        centerPane.add(propertiesPanel, SOUTH);
+
+        JSplitPane centerAndPreviewPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, centerPane, previewPanel);
+        centerAndPreviewPane.setOneTouchExpandable(true);
+        centerAndPreviewPane.setContinuousLayout(true);
+        centerAndPreviewPane.setDividerLocation(0.5);
+        centerAndPreviewPane.setResizeWeight(0.5);
+        centerAndPreviewPane.setDividerSize(8);
+
+        JSplitPane allPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, structurePanel, centerAndPreviewPane);
+        allPane.setContinuousLayout(true);
+        allPane.setDividerLocation(0.3);
+        allPane.setResizeWeight(0.3);
+        allPane.setDividerSize(5);
+
+        mainPanel.add(allPane);
+
+        return mainPanel;
     }
 
     public JScrollPane createStructurePane() {
@@ -69,11 +105,20 @@ public class Navigation {
         return new JScrollPane(treePanel);
     }
 
+    public void setFileExtensionFilter(FileExtensionFilter fileExtensionFilter) {
+        this.fileExtensionFilter = fileExtensionFilter;
+        updateFileList();
+    }
+
     private void selectCurrentDirectory(TreeSelectionEvent e) {
         DirectoryTreeNode selectedDirectoryNode = (DirectoryTreeNode) e.getPath().getLastPathComponent();
-        Directory directory = selectedDirectoryNode.getDirectory();
+        currentDirectory = selectedDirectoryNode.getDirectory();
+        updateFileList();
+    }
 
+    private void updateFileList() {
         replaceCentralContent(propertiesPanel, createEmptyPropertiesPanel());
+        replaceCentralContent(previewPanel, createNoPreviewPane());
 
         cancelIfExists(creatingFileListSwingWorker);
 
@@ -84,7 +129,7 @@ public class Navigation {
             @Override
             protected String doInBackground() throws Exception {
                 replaceCentralContentWithLoadingPane(contentPanel);
-                fileListPane = createFileListPane(directory);
+                fileListPane = createFileListPane(currentDirectory);
                 return "";
             }
 
@@ -94,7 +139,6 @@ public class Navigation {
             }
         };
         creatingFileListSwingWorker.execute();
-
     }
 
     public JComponent createFileListPane(Directory directory) {
@@ -105,7 +149,7 @@ public class Navigation {
         try {
             files = Stream.concat(
                     directory.getSubDirs().stream(),
-                    directory.getFiles().stream()
+                    directory.getFiles(fileExtensionFilter).stream()
             ).collect(Collectors.toList());
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,10 +238,10 @@ public class Navigation {
     private static JComponent createNoResultsPane() {
         return createSimpleTextPane(bundle.getString("noResult"));
     }
-
     private static JComponent createLoadingPane() {
         return createSimpleTextPane(bundle.getString("loading"));
     }
+
     private static JComponent createSimpleTextPane(String text) {
         final JLabel label = new JLabel(text);
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -213,38 +257,6 @@ public class Navigation {
             e.printStackTrace();
             return createEmptyPropertiesPanel();
         }
-    }
-
-    public JPanel createMainLayout() {
-
-        JPanel mainPanel = new JPanel(new GridLayout(1, 1));
-
-        structurePanel.add(createStructurePane(), CENTER);
-        contentPanel.add(createFileListPane(root), CENTER);
-        propertiesPanel.add(createEmptyPropertiesPanel(), CENTER);
-        previewPanel.add(createNoPreviewPane(), CENTER);
-
-
-        JPanel centerPane = new JPanel(new BorderLayout());
-        centerPane.add(contentPanel, CENTER);
-        centerPane.add(propertiesPanel, SOUTH);
-
-        JSplitPane centerAndPreviewPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, centerPane, previewPanel);
-        centerAndPreviewPane.setOneTouchExpandable(true);
-        centerAndPreviewPane.setContinuousLayout(true);
-        centerAndPreviewPane.setDividerLocation(0.5);
-        centerAndPreviewPane.setResizeWeight(0.5);
-        centerAndPreviewPane.setDividerSize(8);
-
-        JSplitPane mainPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, structurePanel, centerAndPreviewPane);
-        mainPane.setContinuousLayout(true);
-        mainPane.setDividerLocation(0.3);
-        mainPane.setResizeWeight(0.3);
-        mainPane.setDividerSize(5);
-
-        mainPanel.add(mainPane);
-
-        return mainPanel;
     }
 
     public JComponent createPreviewPane(File file) {

@@ -1,5 +1,6 @@
 package com.efimchick.jexplorer.navigation.ftp;
 
+import com.efimchick.jexplorer.navigation.FileExtensionFilter;
 import com.efimchick.jexplorer.navigation.ftp.task.*;
 
 import java.io.IOException;
@@ -16,8 +17,8 @@ public class FtpConnector {
         props = new FtpTask.ConnectionProps(server, port,login, password);
     }
 
-    List<FtpFile> getFiles(FtpDirectory ftpDirectory){
-        return new ListFilesTask(this, ftpDirectory).executeOrDefault(props, emptyList());
+    List<FtpFile> getFiles(FtpDirectory ftpDirectory, FileExtensionFilter filter){
+        return new ListFilesTask(this, ftpDirectory, filter).executeOrDefault(props, emptyList());
     }
 
     List<FtpDirectory> getSubDirs(FtpDirectory ftpDirectory) throws IOException {

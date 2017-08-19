@@ -1,5 +1,6 @@
 package com.efimchick.jexplorer.navigation.ftp.task;
 
+import com.efimchick.jexplorer.navigation.FileExtensionFilter;
 import com.efimchick.jexplorer.navigation.ftp.FtpConnector;
 import com.efimchick.jexplorer.navigation.ftp.FtpDirectory;
 import com.efimchick.jexplorer.navigation.ftp.FtpFile;
@@ -14,14 +15,12 @@ import java.util.stream.Collectors;
 public class ListFilesTask extends FtpTask<List<FtpFile>> {
     private final FtpConnector ftpConnector;
     private final FtpDirectory parent;
+    private final FileExtensionFilter filter;
 
-    public ListFilesTask(FtpConnector ftpConnector, FtpDirectory parent) {
+    public ListFilesTask(FtpConnector ftpConnector, FtpDirectory parent, FileExtensionFilter filter) {
         this.ftpConnector = ftpConnector;
         this.parent = parent;
-    }
-
-    public ListFilesTask(FtpConnector ftpConnector) {
-        this(ftpConnector, null);
+        this.filter = filter;
     }
 
     @Override
@@ -31,6 +30,7 @@ public class ListFilesTask extends FtpTask<List<FtpFile>> {
                 .filter(f -> f.isFile())
                 .filter(f -> !f.getName().equals("."))
                 .filter(f -> !f.getName().equals(".."))
+                .filter(f -> filter.test(f.getName()))
                 .map(f -> new FtpFile(ftpConnector, f, parent))
                 .collect(Collectors.toList());
     }
