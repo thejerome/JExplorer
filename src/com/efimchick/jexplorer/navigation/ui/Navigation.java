@@ -218,7 +218,8 @@ public class Navigation {
     private static void replaceCentralContent(JPanel target, JComponent content){
         if (content != null) {
             try {
-                target.remove(1);
+                final BorderLayout borderLayout = (BorderLayout) target.getLayout();
+                target.remove(borderLayout.getLayoutComponent(CENTER));
             } catch (Exception e) {
                 e.printStackTrace();
             }
